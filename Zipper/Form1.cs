@@ -10,16 +10,39 @@ using System.Windows.Forms;
 using System.Configuration;
 using Ionic.Zip;
 using System.IO;
+using Ionic.Zlib;
+using System.Diagnostics;
 
 namespace Zipper
 {
     public partial class frmMain : Form
     {
+        /// <summary>
+        /// Tipo de compresion
+        // Ionic.Zlib.CompressionLevel.None =0
+        // Ionic.Zlib.CompressionLevel.BestSpeed = 1;
+        // Ionic.Zlib.CompressionLevel.Default = 6
+        // Ionic.Zlib.CompressionLevel.BestCompression=9
+        // 
+        /// </summary>
+        enum CompresionLevel
+        {
+            Ninguna = 0,
+            Velocidad = 1,
+            Normal = 6,
+            Compresion = 9
+        };
+
         public frmMain()
         {
             InitializeComponent();
             folderBrowserDialog.SelectedPath = System.AppDomain.CurrentDomain.BaseDirectory;
+
+            //Rellenamos el combo y por defecto aplicamos el metodo normal de compresion
+            cbMetodo.DataSource = Enum.GetValues(typeof(CompresionLevel));
+            cbMetodo.SelectedIndex = cbMetodo.FindString("Normal");
         }
+
         /// <summary>
         /// Llamada a la accion para Comprimir una carpeta
         /// </summary>
@@ -34,10 +57,11 @@ namespace Zipper
                 return;
             }
 
-
+            EnabledControlForm(false);
             using (ZipFile zip = new ZipFile())
             {
-                zip.CompressionLevel = Ionic.Zlib.CompressionLevel.Default;
+
+                zip.CompressionLevel = CheckMetodoCompresion();
                 zip.SaveProgress += SaveProgress;
 
                 zip.StatusMessageTextWriter = System.Console.Out;
@@ -45,8 +69,47 @@ namespace Zipper
 
                 zip.Save(ZipFileToCreate);
             }
-           
-        }      
+            EnabledControlForm(true);
+
+        }
+
+        private CompressionLevel CheckMetodoCompresion()
+        {
+            return (Ionic.Zlib.CompressionLevel)Enum.Parse(typeof(Ionic.Zlib.CompressionLevel), 
+                ConvertMetodo(cbMetodo.SelectedItem.ToString()));
+        }
+
+        // Ionic.Zlib.CompressionLevel.None =0
+        // Ionic.Zlib.CompressionLevel.BestSpeed = 1;
+        // Ionic.Zlib.CompressionLevel.Default = 6
+        // Ionic.Zlib.CompressionLevel.BestCompression=9
+        //----------------------------------------------
+        // Ninguna = 0,
+        // Velocidad = 1,
+        // Normal = 6,
+        // Compresion = 9
+        /// <summary>
+        /// Convierte del enumerado del Componente menos amigable a otro enumerable más facil de entender
+        /// </summary>
+        /// <param name="selectedItem"></param>
+        /// <returns></returns>
+        private string ConvertMetodo(string selectedItem)
+        {
+            switch (selectedItem)
+            {
+                case "Ninguna":
+                    return "None";                    
+                case "Velocidad":
+                    return "BestSpeed";
+                case "Normal":
+                    return "Default";
+                case "Compresion":
+                    return "BestCompression";
+                default:
+                    return "Default";
+            }
+        }
+
         /// <summary>
         /// Llamada a la accion para seleccionar el fichero zip para descomprimir
         /// </summary>
@@ -80,14 +143,36 @@ namespace Zipper
                 return;
             }
 
+            EnabledControlForm(false);
             using (ZipFile zip = ZipFile.Read(txtFileZip.Text))
             {
-                zip.CompressionLevel = Ionic.Zlib.CompressionLevel.Default;
+                zip.CompressionLevel = CheckMetodoCompresion();
                 zip.ExtractProgress += ExtractProgress;
 
                 zip.StatusMessageTextWriter = System.Console.Out;
-                zip.ExtractAll(txtPathDestino.Text, ExtractExistingFileAction.OverwriteSilently);
+                zip.ExtractAll(txtPathDestino.Text, SobreescribirFicheros());
             }
+            EnabledControlForm(true);
+        }
+
+        private ExtractExistingFileAction SobreescribirFicheros()
+        {
+            if(ckSobreescribirFile.Checked)
+                return ExtractExistingFileAction.OverwriteSilently;
+            else
+                return ExtractExistingFileAction.DoNotOverwrite;
+        }
+
+        private void EnabledControlForm(bool estado)
+        {
+            btnComprimir.Enabled = estado;
+            btnDescomprimir.Enabled = estado;
+            btnFileZip.Enabled = estado;
+            btnPathDestino.Enabled = estado;
+            btnPathOrigen.Enabled = estado;
+            cbMetodo.Enabled = estado;
+            ckSobreescribirFile.Enabled = estado;
+            btnExplorer.Enabled = estado;
         }
 
         /// <summary>
@@ -114,7 +199,7 @@ namespace Zipper
             }
             else if (e.EventType == ZipProgressEventType.Extracting_AfterExtractAll)
             {
-                txtMsgInfo.Text = "Hecho: " + e.ArchiveName;
+                txtMsgInfo.Text = "Hecho: " + e.ArchiveName + " - Número de archivos: " + progressBar.Value;
             }
         }
 
@@ -143,7 +228,7 @@ namespace Zipper
             }
             else if (e.EventType == ZipProgressEventType.Saving_Completed)
             {
-                txtMsgInfo.Text = "Hecho: " + e.ArchiveName;
+                txtMsgInfo.Text = "Hecho: " + e.ArchiveName + " - Número de archivos: " + progressBar.Value;
             }
         }
 
@@ -193,6 +278,11 @@ namespace Zipper
                 ConfigurationManager.AppSettings[path] = folderBrowserDialog.SelectedPath;
             }
             return ConfigurationManager.AppSettings[path].ToString();
+        }
+
+        private void btnExplorer_Click(object sender, EventArgs e)
+        {
+            Process.Start("explorer.exe",txtPathDestino.Text);
         }
     }
 

@@ -44,6 +44,9 @@
             this.txtFileZip = new System.Windows.Forms.TextBox();
             this.btnFileZip = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.cbMetodo = new System.Windows.Forms.ComboBox();
+            this.lblMetodo = new System.Windows.Forms.Label();
+            this.btnExplorer = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
@@ -98,9 +101,9 @@
             this.ckSobreescribirFile.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ckSobreescribirFile.Location = new System.Drawing.Point(15, 189);
             this.ckSobreescribirFile.Name = "ckSobreescribirFile";
-            this.ckSobreescribirFile.Size = new System.Drawing.Size(105, 17);
+            this.ckSobreescribirFile.Size = new System.Drawing.Size(197, 17);
             this.ckSobreescribirFile.TabIndex = 7;
-            this.ckSobreescribirFile.Text = "Sobreescribir Zip";
+            this.ckSobreescribirFile.Text = "Sobreescribir Fichero Zip o Carpetas";
             this.ckSobreescribirFile.UseVisualStyleBackColor = true;
             this.ckSobreescribirFile.CheckedChanged += new System.EventHandler(this.ckSobreescribirFile_CheckedChanged);
             // 
@@ -166,11 +169,41 @@
             // 
             this.openFileDialog.FileName = "openFileDialog";
             // 
+            // cbMetodo
+            // 
+            this.cbMetodo.FormattingEnabled = true;
+            this.cbMetodo.Location = new System.Drawing.Point(309, 123);
+            this.cbMetodo.Name = "cbMetodo";
+            this.cbMetodo.Size = new System.Drawing.Size(121, 21);
+            this.cbMetodo.TabIndex = 14;
+            // 
+            // lblMetodo
+            // 
+            this.lblMetodo.AutoSize = true;
+            this.lblMetodo.Location = new System.Drawing.Point(202, 127);
+            this.lblMetodo.Name = "lblMetodo";
+            this.lblMetodo.Size = new System.Drawing.Size(101, 13);
+            this.lblMetodo.TabIndex = 15;
+            this.lblMetodo.Text = "Método Compresión";
+            // 
+            // btnExplorer
+            // 
+            this.btnExplorer.Location = new System.Drawing.Point(309, 94);
+            this.btnExplorer.Name = "btnExplorer";
+            this.btnExplorer.Size = new System.Drawing.Size(121, 23);
+            this.btnExplorer.TabIndex = 16;
+            this.btnExplorer.Text = "Ver Resultado";
+            this.btnExplorer.UseVisualStyleBackColor = true;
+            this.btnExplorer.Click += new System.EventHandler(this.btnExplorer_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(442, 223);
+            this.Controls.Add(this.btnExplorer);
+            this.Controls.Add(this.lblMetodo);
+            this.Controls.Add(this.cbMetodo);
             this.Controls.Add(this.txtFileZip);
             this.Controls.Add(this.btnFileZip);
             this.Controls.Add(this.txtMsgInfo);
@@ -211,6 +244,9 @@
         private System.Windows.Forms.TextBox txtFileZip;
         private System.Windows.Forms.Button btnFileZip;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.Label lblMetodo;
+        private System.Windows.Forms.ComboBox cbMetodo;
+        private System.Windows.Forms.Button btnExplorer;
     }
 }
 
