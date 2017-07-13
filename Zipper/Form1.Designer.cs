@@ -52,7 +52,7 @@
             // 
             // btnComprimir
             // 
-            this.btnComprimir.Location = new System.Drawing.Point(343, 154);
+            this.btnComprimir.Location = new System.Drawing.Point(250, 185);
             this.btnComprimir.Name = "btnComprimir";
             this.btnComprimir.Size = new System.Drawing.Size(87, 23);
             this.btnComprimir.TabIndex = 0;
@@ -109,9 +109,9 @@
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(15, 154);
+            this.progressBar.Location = new System.Drawing.Point(15, 163);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(322, 23);
+            this.progressBar.Size = new System.Drawing.Size(415, 14);
             this.progressBar.TabIndex = 8;
             // 
             // txtPathOrigen
@@ -141,7 +141,7 @@
             this.txtMsgInfo.Location = new System.Drawing.Point(12, 92);
             this.txtMsgInfo.Multiline = true;
             this.txtMsgInfo.Name = "txtMsgInfo";
-            this.txtMsgInfo.Size = new System.Drawing.Size(383, 56);
+            this.txtMsgInfo.Size = new System.Drawing.Size(311, 56);
             this.txtMsgInfo.TabIndex = 11;
             this.txtMsgInfo.Text = "Proporciona informacion de estado de la compresion";
             // 
@@ -172,15 +172,15 @@
             // cbMetodo
             // 
             this.cbMetodo.FormattingEnabled = true;
-            this.cbMetodo.Location = new System.Drawing.Point(309, 123);
+            this.cbMetodo.Location = new System.Drawing.Point(343, 136);
             this.cbMetodo.Name = "cbMetodo";
-            this.cbMetodo.Size = new System.Drawing.Size(121, 21);
+            this.cbMetodo.Size = new System.Drawing.Size(87, 21);
             this.cbMetodo.TabIndex = 14;
             // 
             // lblMetodo
             // 
             this.lblMetodo.AutoSize = true;
-            this.lblMetodo.Location = new System.Drawing.Point(202, 127);
+            this.lblMetodo.Location = new System.Drawing.Point(236, 139);
             this.lblMetodo.Name = "lblMetodo";
             this.lblMetodo.Size = new System.Drawing.Size(101, 13);
             this.lblMetodo.TabIndex = 15;
@@ -188,9 +188,9 @@
             // 
             // btnExplorer
             // 
-            this.btnExplorer.Location = new System.Drawing.Point(309, 94);
+            this.btnExplorer.Location = new System.Drawing.Point(343, 94);
             this.btnExplorer.Name = "btnExplorer";
-            this.btnExplorer.Size = new System.Drawing.Size(121, 23);
+            this.btnExplorer.Size = new System.Drawing.Size(87, 23);
             this.btnExplorer.TabIndex = 16;
             this.btnExplorer.Text = "Ver Resultado";
             this.btnExplorer.UseVisualStyleBackColor = true;

@@ -11,6 +11,7 @@ using System.Configuration;
 using Ionic.Zip;
 using System.IO;
 using Ionic.Zlib;
+using Ionic.Crc;
 using System.Diagnostics;
 
 namespace Zipper
@@ -60,6 +61,7 @@ namespace Zipper
             EnabledControlForm(false);
             using (ZipFile zip = new ZipFile())
             {
+                zip.ParallelDeflateThreshold = -1;
 
                 zip.CompressionLevel = CheckMetodoCompresion();
                 zip.SaveProgress += SaveProgress;
@@ -146,6 +148,8 @@ namespace Zipper
             EnabledControlForm(false);
             using (ZipFile zip = ZipFile.Read(txtFileZip.Text))
             {
+                zip.ParallelDeflateThreshold = -1;
+
                 zip.CompressionLevel = CheckMetodoCompresion();
                 zip.ExtractProgress += ExtractProgress;
 
@@ -199,7 +203,7 @@ namespace Zipper
             }
             else if (e.EventType == ZipProgressEventType.Extracting_AfterExtractAll)
             {
-                txtMsgInfo.Text = "Hecho: " + e.ArchiveName + " - Número de archivos: " + progressBar.Value;
+                txtMsgInfo.Text = "Hecho: " + e.ArchiveName + " \r\nNúmero de archivos: " + progressBar.Value;
             }
         }
 
@@ -228,7 +232,7 @@ namespace Zipper
             }
             else if (e.EventType == ZipProgressEventType.Saving_Completed)
             {
-                txtMsgInfo.Text = "Hecho: " + e.ArchiveName + " - Número de archivos: " + progressBar.Value;
+                txtMsgInfo.Text = "Hecho: " + e.ArchiveName + "  \r\nNúmero de archivos: " + progressBar.Value;
             }
         }
 
